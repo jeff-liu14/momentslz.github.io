@@ -74,5 +74,5 @@ limit: 20
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:momentslz/momentslz.github.io.git
+  repo: https://github.com/momentslz/momentslz.github.io.git
   branch: master
