@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-19T02:48:56.000Z</updated>
+  <updated>2016-04-28T01:10:30.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2016/04/28/Android%E8%BF%9B%E5%87%BB%E7%9A%84%E8%8F%9C%E9%B8%9F/"/>
+    <id>http://yoursite.com/2016/04/28/Android进击的菜鸟/</id>
+    <published>2016-04-28T01:09:06.000Z</published>
+    <updated>2016-04-28T01:10:30.000Z</updated>
+    
+    <content type="html">&lt;hr&gt;
+&lt;p&gt;###Android进击的菜鸟&lt;br&gt;date: 2016-04-28 09:09:06&lt;/p&gt;
+&lt;p&gt;####试用期那些不为人知的故事&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;相信有很多搞技术的人都有体会，简而言之试用期其实就是公司考核一个人是否符合公司要求的重要时期，相信也有很多人会在这个时期会被淘汰掉，接下来我会对自己在实习期间的一些心得和体会来跟大家分享一下。
+
+首先我要声明一点也是最重要的，很多人会认为实习期就要好好的巴结领导，好好表现争取可以留下来，应该有好多人都会这么想吧，可是我自己体会下来其实试用期并不用看的很重要，试用期其实就是你对公司深入了解的一段时间，在这期间你可以了解到公司同事们的生活习惯，也可以了解公司的一些管理制度，其实在这阶段最重要的还是你要去深入的了解你接下来一段时间要去做的工作。
+
+有人可能会说我要在试用期好好表现其实并不用，公司也没想过你能在试用期间给公司带来多大的贡献，你需要做的就是认真踏实的去了解你即将负责的工作，花点时间去认真熟悉，不懂的就问同事，不要不好意思自己觉得丢人，其实问的过程你也可以深入的了解到公司技术层面的各种制度，同时祝贺你成功的交到了你在公司的第一个朋友。
+
+总而言之呢就是试用期要认真的去了解自己要做什么，怎么做，不要把时间花在所谓的人情事故上，这样你会得不偿失。
+
+最后祝大家平稳的度过试用期，good luck
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;p&gt;###Android进击的菜鸟&lt;br&gt;date: 2016-04-28 09:09:06&lt;/p&gt;
+&lt;p&gt;####试用期那些不为人知的故事&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;相信有很多搞技术的人都有体会，简而言之试用期其实就是公司考核一个人是否
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>first Night</title>
