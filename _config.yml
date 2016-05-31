@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: moment 的技术博客
+title: 刘正的技术博客
 subtitle: 
 description:
 author: moment
@@ -66,7 +66,8 @@ pagination_dir: page
 #theme: yilia
 #theme: light-ch
 #theme: even
-theme: TKL
+theme: athena
+#theme: TKL
 plugin: hexo-generator-feed
 #Feed Atom
 feed:     
