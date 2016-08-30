@@ -1,5 +1,5 @@
 ---
-title:	Android进击的菜鸟
+title:	Android 进击的菜鸟
 ---
 
 #####	试用期那些不为人知的故事
