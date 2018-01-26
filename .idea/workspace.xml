@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="769c7c89-29f9-4e7e-b687-8b72e7c7ac66" name="Default" comment="fasdfasdf">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/2016/04/19/FirstNight/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/2016/04/19/hello-world/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/2016/04/28/Android进击的菜鸟/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/archives/2016/04/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/archives/2016/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/archives/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/scaffolds/draft.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/scaffolds/page.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/scaffolds/post.md" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/source/.travis.yml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/source/.travis.yml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/vno" afterPath="$PROJECT_DIR$/themes/vno" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -38,16 +29,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="441">
               <caret line="80" column="16" selection-start-line="80" selection-start-column="16" selection-end-line="80" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/.travis.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -153,7 +134,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
+              <option name="myItemId" value="themes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -167,7 +148,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value=".deploy_git" />
+              <option name="myItemId" value="source" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
