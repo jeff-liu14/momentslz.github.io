@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Android中处理耗时操作的几种方法 | 刘正的技术博客</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Android中处理耗时操作的几种方法 | 刘正的技术博客">
+    <meta name="twitter:description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Android中处理耗时操作的几种方法 | 刘正的技术博客">
+    <meta property="og:description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    
+    <meta name="author" content="moment">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2018/01/26/Android中处理耗时操作的几种方法/"/>
+
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 刘正的技术博客 的主页"><img src="/images/crop_photo.jpg" width="80" alt="刘正的技术博客 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 刘正的技术博客">刘正的技术博客</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">胆小认生，不易相处</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">擅长Android技能,深入研究移动端开发,此为博客一枚。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/momentslz" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-01-26T01:30:46.000Z" class="post-list__meta--date date">2018-01-26</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/toolbar-actionbar/">toolbar actionbar</a>
+</span>
+    </div>
+    <h1 class="post-title">Android中处理耗时操作的几种方法</h1>
+  </header>
+
+  <section class="post">
+    <h1 id="耗时操作的几种操作方式"><a href="#耗时操作的几种操作方式" class="headerlink" title="耗时操作的几种操作方式"></a>耗时操作的几种操作方式</h1><h3 id="Thread-Handler-Looper-MessageQueue"><a href="#Thread-Handler-Looper-MessageQueue" class="headerlink" title="Thread Handler Looper MessageQueue"></a>Thread Handler Looper MessageQueue</h3><p>创建handler时会创建looer对象并用looper中的messageQueue对象初始化当前messageQueue当使用handler发送消息时会有两种方式发送：sendMessage和dispatchMessage<br>前者发送的消息会直接发送至messageQueue中通过looper对象循环处理并将结果转发至handler的handleMessage方法中经过了线程之间的切换<br>后者则通过判断是否存在Runnable接口回调来选择返回信息的方式存在的话则直接调用Runnable中的run方法，若不存在则直接调用handler中的handMessage方法，在同一线程完成</p>
+<p>在主线程使用<br>在主线程创建handler对象并其修饰为static类型，覆写handleMessage方法对收到的message对象进行处理，从打印信息可以发现当前线程为main线程即主线程，其中的looper对象是在ActivityThread.main中创建的<br>handler 使用示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public static Handler handler = new Handler() &#123; </span><br><span class="line">        @Override   </span><br><span class="line">        public void handleMessage(Message msg) &#123;   </span><br><span class="line">            switch (msg.what) &#123;   </span><br><span class="line">                case 10001:   </span><br><span class="line">                    Log.d(&quot;main&quot;, msg.obj + &quot;&quot; + Looper.myLooper().getThread().getName());   </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+<p>thread使用:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            Message message = handler.obtainMessage();</span><br><span class="line">            message.what = 10001;</span><br><span class="line">            message.obj = &quot;hello&quot;;</span><br><span class="line">            handler.dispatchMessage(message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).start();</span><br></pre></td></tr></table></figure>
+<p>在thread线程中使用handler对象时参考Lopper源码中的示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">private class LopperThread extends Thread &#123;</span><br><span class="line">        private Handler mHandler;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            super.run();</span><br><span class="line">            Looper.prepare();</span><br><span class="line">            mHandler = new Handler() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public void handleMessage(Message msg) &#123;</span><br><span class="line">                    switch (msg.what) &#123;</span><br><span class="line">                        case 10001:</span><br><span class="line">                            Log.d(&quot;main&quot;, msg.obj + &quot;&quot; + Looper.myLooper().getThread().getName());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">            Message message = mHandler.obtainMessage();</span><br><span class="line">            message.what = 10001;</span><br><span class="line">            message.obj = &quot;hello&quot;;</span><br><span class="line">            mHandler.sendMessage(message);</span><br><span class="line">            Looper.loop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>使用方法为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LopperThread thread = new LopperThread();</span><br><span class="line">thread.start();</span><br></pre></td></tr></table></figure>
+<h3 id="AsyncTask"><a href="#AsyncTask" class="headerlink" title="AsyncTask"></a>AsyncTask</h3><p>asynctask的创建： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public class MyTestTask extends AsyncTask&lt;Integer, Integer, String&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private static final String TAG = MyTestTask.class.getSimpleName();</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onPreExecute() &#123;</span><br><span class="line">        super.onPreExecute();</span><br><span class="line">        Log.i(TAG, &quot;onPreExecute-&gt;运行前,主线程)&quot; + Looper.myLooper().getThread().getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onPostExecute(String s) &#123;</span><br><span class="line">        super.onPostExecute(s);</span><br><span class="line">        Log.i(&quot;TAG&quot;, &quot;onPostExecute-&gt;运行后,主线程&quot; + Looper.myLooper().getThread().getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onProgressUpdate(Integer... values) &#123;</span><br><span class="line">        super.onProgressUpdate(values);</span><br><span class="line">        Log.i(&quot;TAG&quot;, &quot;onProgressUpdate-&gt;更新进度,主线程&quot; + Looper.myLooper().getThread().getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected String doInBackground(Integer... params) &#123;</span><br><span class="line">        Log.i(TAG, &quot;doInBackground-&gt;运行中,子线程&quot;);</span><br><span class="line">        for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">            publishProgress(i);</span><br><span class="line">        &#125;</span><br><span class="line">        return &quot;finish&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中三个泛型的参数分别为：<br>Params(传入doInBackground方法中的参数)<br>Progress(onProgressUpdate方法中更新进度的参数)<br>Result(后台执行完成后的返回参数)   </p>
+<p>使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (int i = 0; i &lt; 128; i++) &#123;</span><br><span class="line">    new MyTestTask().execute();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用须知：AsyncTask<br>3.0之前为并发执行最大并发数两位128(参见2.3.7源码MAXIMUM_POOL_SIZE = 128)，当并发数量大于128时会报异常<br>3.0之后AsyncTask变为顺序执行，当上一个任务完成后才会执行下一个任务，顺序执行<br><a href="http://blog.csdn.net/qq_23547831/article/details/50803849" target="_blank" rel="noopener">参考链接</a></p>
+<h3 id="HandlerThread"><a href="#HandlerThread" class="headerlink" title="HandlerThread"></a>HandlerThread</h3><p>handlerthread继承自Thread所以本来就是线程，只是在线程的run方法中添加了looper循环来实现耗时操作，在使用时先调用start方法开启线程然后通过mHandlerThread.getLooper()的方法获取handlerThread中的looper对象和新创建的hanlder对象进行绑定即通过以下方法初始化新建的handler：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public Handler(Looper looper) &#123;</span><br><span class="line">     this(looper, null, false);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在handler初始化后即和handlerthread完成绑定，需注意的是耗时操作需在新建的handler的handleMessage方法中进行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        mTid = Process.myTid();</span><br><span class="line">        Looper.prepare();</span><br><span class="line">        synchronized (this) &#123;</span><br><span class="line">            mLooper = Looper.myLooper();</span><br><span class="line">            notifyAll();</span><br><span class="line">        &#125;</span><br><span class="line">        Process.setThreadPriority(mPriority);</span><br><span class="line">        onLooperPrepared();</span><br><span class="line">        Looper.loop();</span><br><span class="line">        mTid = -1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>通过Looper.prepare()和 Looper.loop()实现了looper循环使用方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">初始化：</span><br><span class="line">HandlerThread mHandlerThread = new HandlerThread(&quot;myHandlerThread&quot;);</span><br><span class="line">mHandlerThread.start();</span><br><span class="line">Handler mHandler = new Handler(mHandlerThread.getLooper()) &#123;</span><br><span class="line">      @Override</span><br><span class="line">      public void handleMessage(Message msg) &#123;</span><br><span class="line">      //耗时操作</span><br><span class="line">      do something....</span><br><span class="line">           Log.i(&quot;tag&quot;, &quot;message_obj：&quot; + msg.obj.toString());</span><br><span class="line">      &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">发送Message：</span><br><span class="line">Message msg = new Message();</span><br><span class="line">msg.obj = &quot;message_obj&quot;;</span><br><span class="line">mHandler.sendMessage(msg);</span><br></pre></td></tr></table></figure>
+<p><a href="http://blog.csdn.net/lmj623565791/article/details/47079737/" target="_blank" rel="noopener">参考链接</a></p>
+<h3 id="IntentService"><a href="#IntentService" class="headerlink" title="IntentService"></a>IntentService</h3><p>IntentService在onCreate时使用HandlerService对ServiceHandler进行了绑定，在ServiceHandler的handleMessage方法中调用了抽象方法onHandleIntent进行耗时操作，所以在IntentService的onHandleIntent方法中可以进行耗时操作，在onHandleIntent调用后还调用了stopSelf方法结束自己，所以IntentService当执行完耗时操作后会自动销毁</p>
+<p>代码示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class TestIntentService extends IntentService &#123;</span><br><span class="line">    private static String TAG = &quot;IntentServiceLoad&quot;;</span><br><span class="line"></span><br><span class="line">    public TestIntentService() &#123;</span><br><span class="line">        super(TAG);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onHandleIntent(Intent intent) &#123;</span><br><span class="line">        //耗时操作</span><br><span class="line">        // TODO: 2018/1/25 do something...</span><br><span class="line">        Log.d(TAG, &quot;onHandleIntent&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用方法和service相同就不举例说明了，在应用中一般会用来下载文件</p>
+
+  </section>
+
+</article>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@Longbo Ma</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="http://github.com/onevcat/vno" target="_blank">Vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+</body>
+</html>

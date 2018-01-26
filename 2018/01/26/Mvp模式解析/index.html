@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>MVP模式解析 | 刘正的技术博客</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MVP模式解析 | 刘正的技术博客">
+    <meta name="twitter:description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="MVP模式解析 | 刘正的技术博客">
+    <meta property="og:description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    
+    <meta name="author" content="moment">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2018/01/26/Mvp模式解析/"/>
+
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 刘正的技术博客 的主页"><img src="/images/crop_photo.jpg" width="80" alt="刘正的技术博客 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 刘正的技术博客">刘正的技术博客</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">胆小认生，不易相处</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">擅长Android技能,深入研究移动端开发,此为博客一枚。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/momentslz" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-01-26T03:47:04.000Z" class="post-list__meta--date date">2018-01-26</time> &#8226; <span class="post-meta__tags tags">于&nbsp;</span>
+    </div>
+    <h1 class="post-title">MVP模式解析</h1>
+  </header>
+
+  <section class="post">
+    <p>前言：</p>
+<p>MVP模式是从MVVM 模式转化而来，MVVM是Model-View-ViewModel的简写,而MVP则是Model-View-Presenter 模式，其中Model负责</p>
+<p>下面列举两种的差别：</p>
+<blockquote>
+<p>   1、MVC</p>
+</blockquote>
+<p>MVC 模式是model view 和 controller 三者之间可以互相通信，但是这样就存在一个问题，就是view层可以调用model层和controller层的代码，所以会导致逻辑混乱。</p>
+<p><img src="http://liuzheng.space/img/mvc.png" width="400px"></p>
+<blockquote>
+<p>   2、MVP<br>MVP 是Model view 和 Presenter 组成，MVP最大的好处就是剥离了Presenter层出来替换掉了Controller，从而使得model 层和view层不能直接进行通信，必须通过presenter层间接进行通信，一般来说一个Activity只有一个presenter层来控制逻辑，但是在复杂的Activity中可以通过绑定多个Presenter来实现复杂的逻辑。</p>
+</blockquote>
+<p><img src="http://liuzheng.space/img/mvp.png" width="400px"></p>
+<p>下面为大家展示下我已经封装好的逻辑代码：</p>
+<p>model :</p>
+<pre><code>
+//basemodel 与数据请求相关的接口
+public class BaseModel {
+
+    public  interface Classify {
+        void getCookClassify(CallBack<cookclassify> callBack);
+    }
+
+
+} 
+//MainModel 实现BaseModel.Classify中的接口进行数据请求
+public class MainModel implements BaseModel.Classify {
+
+    @Override
+    public void getCookClassify(CallBack<cookclassify> callBack) {
+    // 数据请求
+        GetDataList.getCookClassify(callBack);
+    }
+}
+</cookclassify></cookclassify></code></pre>
+
+
+<p>view:</p>
+<pre><code>
+//baseActivity 源码：
+
+public abstract class BaseActivity<t> extends AppCompatActivity {
+//Presenter 实例
+    protected T presenter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        beforeOnCreate();
+        super.onCreate(savedInstanceState);
+        setContentView(getLayoutId());
+        initViews();
+        initdata();
+    }
+
+    protected abstract int getLayoutId();
+
+    protected abstract void initViews();
+
+    protected abstract void initdata();
+
+    protected  void beforeOnCreate(){
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        afterOnResume();
+    }
+
+    protected  void afterOnResume(){
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        afterOnDestory();
+    }
+
+    protected  void afterOnDestory(){
+
+    }
+
+
+}
+
+
+
+
+//baseview 接口，用来刷新页面数据，可以根据需求添加不同的方法。
+public interface BaseView<t> {
+//显示加载框
+    void showDialog();
+//加载成功
+    void onSuccess(T t);
+//加载失败
+    void onError(Throwable t);
+//取消加载框
+    void dismissDialog();
+}
+</t></t></code></pre>
+
+<p>presenter:</p>
+<pre><code>
+public class MainPresenter {
+// 页面刷新接口
+    private BaseView baseView;
+    // 数据调用model
+    private BaseModel.Classify cookClassify;
+
+    public MainPresenter init(BaseView baseView) {
+        this.baseView = baseView;
+        this.cookClassify = new MainModel();
+        return this;
+    }
+
+    public void getData() {
+        baseView.showDialog();
+        cookClassify.getCookClassify(new CallBack<cookclassify>() {
+            @Override
+            public void onCompleted() {
+                baseView.dismissDialog();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                baseView.dismissDialog();
+                baseView.onError(e);
+            }
+
+            @Override
+            public void onNext(CookClassify cookClassify) {
+                baseView.onSuccess(cookClassify);
+            }
+        });
+    }
+
+}
+</cookclassify></code></pre>
+
+
+<p>使用步骤：</p>
+<p>在BaseModel 中新建model接口 例：<br><code><pre><br>public interface Classify {<br>        void getCookClassify(CallBack<cookclassify> callBack);<br>    }<br>    </cookclassify></pre></code></p>
+<p>新建相应的Model实现接口里的方法并进行数据获取 例：<br><code><pre><br> public class MainModel implements BaseModel.Classify {<br>   @Override<br>   public void getCookClassify(CallBack<cookclassify> callBack) {<br>        GetDataList.getCookClassify(callBack);<br>    }<br>}<br></cookclassify></pre></code></p>
+<p>新建presenter 例：<br><code><pre><br> public class MainPresenter {<br>    private BaseView baseView;<br>    private BaseModel.Classify cookClassify;</pre></code></p>
+<p>   public MainPresenter init(BaseView baseView) {<br>        this.baseView = baseView;<br>        this.cookClassify = new MainModel();<br>        return this;<br>    }</p>
+<p>   public void getData() {<br>        baseView.showDialog();<br>        cookClassify.getCookClassify(new CallBack<cookclassify>() {<br>            @Override<br>            public void onCompleted() {<br>                baseView.dismissDialog();<br>            }<br>           @Override<br>           public void onError(Throwable e) {<br>                baseView.dismissDialog();<br>                baseView.onError(e);<br>            }<br>            @Override<br>            public void onNext(CookClassify cookClassify) {<br>                baseView.onSuccess(cookClassify);<br>            }<br>        });<br>    }<br>}<br><br>继承BaseActivity并传入presenter数据类型 例：<br><code><pre><br>public class MainActivity extends BaseActivity&lt;.MainPresenter&gt; implements BaseView<cookclassify> {</cookclassify></pre></code></cookclassify></p>
+<p>@Override<br>protected void initdata() {<br>        // 实例化presenter<br>        presenter = new MainPresenter().init(this);<br>        presenter.getData();<br>    }</p>
+<p> @Override<br>    public void showDialog() {<br>//todo: 显示dialog<br>    }<br>    @Override<br>    public void onSuccess(CookClassify cookClassify) {<br>    //todo: 刷新页面数据<br>        MyListAdapter adapter = getAdapter();<br>        adapter.refreshDatas(cookClassify.getTngou());<br>    }<br>    @Override<br>    public void onError(Throwable t) {<br>    //todo: 错误处理<br>        Log.d(“debug”, “onError===&gt;” + t.getLocalizedMessage());<br>    }<br>    @Override<br>    public void dismissDialog() {<br>    //todo: 取消dialog显示<br>    }<br>}</p>
+<p></p>
+<p>更多详情见github openobj:</p>
+<p>github :    <a href="https://github.com/momentslz" target="_blank" rel="noopener">https://github.com/momentslz</a></p>
+<p>更多内容请添加本人公众号：</p>
+<p><img src="http://liuzheng.space/img/share.jpg" width="300px"></p>
+
+  </section>
+
+</article>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@Longbo Ma</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="http://github.com/onevcat/vno" target="_blank">Vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+</body>
+</html>

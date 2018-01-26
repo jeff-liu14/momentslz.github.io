@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>自定义ActionBar | 刘正的技术博客</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="自定义ActionBar | 刘正的技术博客">
+    <meta name="twitter:description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="自定义ActionBar | 刘正的技术博客">
+    <meta property="og:description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    
+    <meta name="author" content="moment">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2016/06/05/自定义ActionBar/"/>
+
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 刘正的技术博客 的主页"><img src="/images/crop_photo.jpg" width="80" alt="刘正的技术博客 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 刘正的技术博客">刘正的技术博客</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">胆小认生，不易相处</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">擅长Android技能,深入研究移动端开发,此为博客一枚。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/momentslz" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-06-05T01:30:46.000Z" class="post-list__meta--date date">2016-06-05</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/toolbar-actionbar/">toolbar actionbar</a>
+</span>
+    </div>
+    <h1 class="post-title">自定义ActionBar</h1>
+  </header>
+
+  <section class="post">
+    <p>前言：</p>
+<p>相信大家都用过ActionBar吧，基本上都会去继承AppCompactActivity，但是在某些情况下，想实现一些特殊的效果的时候，系统自带的ActionBar就显得有点儿鸡肋了，不过后面又出了ToolBar控件，大大的弥补了ActionBar的不足，所以本次的自定义ActionBar就是继承的ToolBar，从而实现了ActionBar的高度以及可显示内容的高度定制。</p>
+<p>下面列举几种自定义的样式：</p>
+<blockquote>
+<p>   1、自定义左侧返回菜单，使用方法见代码：</p>
+<p><pre><br>private MyActionBar actionBar;<br> actionBar = (MyActionBar) findViewById(R.id.myactionbar);<br>actionBar.withTitle(“分类目录”) //设置title文字<br>          .setABCallBack(this) // 设置左侧返回按钮，中间自定义菜单及右侧按钮点击事件<br>          .isShowBack(false) //是否显示左侧返回菜单<br>//效果见下图：</pre></p>
+</blockquote>
+<p></p>
+<p><img src="http://liuzheng.space/img/title01.png" width="400px"></p>
+<blockquote>
+<p>   2、自定义ActionBar中间的view</p>
+</blockquote>
+<pre>
+private MyActionBar actionBar;
+ actionBar = (MyActionBar) findViewById(R.id.myactionbar);
+ //自定义中间的view。
+ View view = getLayoutInflater().inflate(R.layout.actionbar_center, null);
+        view.findViewById(R.id.btn_click).setOnClickListener(v -> Toast.makeText(getApplicationContext(), "id:" + ((Button) v.findViewById(R.id.btn_click)).getText(), Toast.LENGTH_SHORT).show());
+actionBar.setABCallBack(this) // 设置左侧返回按钮，中间自定义菜单及右侧按钮点击事件
+          .isShowBack(false) //是否显示左侧返回菜单
+          .addCenterView(view); //添加自定义view 见图二TEST按钮
+//效果见下图：
+
+</pre>
+
+
+
+<p><img src="http://liuzheng.space/img/title02.png" width="400px"></p>
+<blockquote>
+<p>   3、自定义右侧按钮点击事件</p>
+</blockquote>
+<pre>
+private MyActionBar actionBar;
+ actionBar = (MyActionBar) findViewById(R.id.myactionbar);
+ //右侧item adapter
+ List<mypopupwindow.menuentity> menuEntities = new ArrayList<>();
+        menuEntities.add(new MyPopupWindow.MenuEntity(R.drawable.titlebar_back_press, "name"));
+        menuEntities.add(new MyPopupWindow.MenuEntity(R.drawable.titlebar_back_press, "name1"));
+        menuEntities.add(new MyPopupWindow.MenuEntity(R.drawable.titlebar_back_press, "name2"));
+
+actionBar.setABCallBack(this) // 设置左侧返回按钮，中间自定义菜单及右侧按钮点击事件
+          .isShowBack(false) //是否显示左侧返回菜单
+          .addMenuList(menuEntities) // 添加右侧按钮item
+          .addCenterView(view); //添加自定义view 
+//效果见下图：
+ </mypopupwindow.menuentity></pre>
+
+
+
+<p><img src="http://liuzheng.space/img/title04.png" width="400px"></p>
+<p>MyActionBar 源码：</p>
+<pre>
+public class MyActionBar extends Toolbar {
+
+    private int backColor;
+    private int defaultColor;
+    private TextView tvTitle;
+    private ImageView ivBack, ivRight;
+    private RelativeLayout llBackground;
+    private AbCallBack abCallBack;
+    private Context mContext;
+    private LinearLayout llcontainer;
+    private MyPopupWindow popupWindow;
+
+    public MyActionBar(Context context) {
+        super(context, null);
+
+    }
+
+    public MyActionBar(Context context, final AttributeSet attrs) {
+        this(context, attrs, -1);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public MyActionBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        this.mContext = context;
+        defaultColor = context.getColor(R.color.colorPrimary);
+        LayoutInflater.from(context).inflate(R.layout.actionbar, this, true);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs,
+                R.styleable.MyActionBar, 0, 0);
+        backColor = typedArray.getColor(R.styleable.MyActionBar_myactionbar_background, defaultColor);
+        llBackground = (RelativeLayout) findViewById(R.id.ll_background);
+        llBackground.setBackgroundColor(backColor);
+        llcontainer = (LinearLayout) findViewById(R.id.ll_container);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivRight = (ImageView) findViewById(R.id.iv_right);
+        ivBack.setColorFilter(getResources().getColor(R.color.white));
+        ivBack.setOnClickListener(v -> abCallBack.onBackClick());
+        ivRight.setColorFilter(getResources().getColor(R.color.white));
+        ivRight.setOnClickListener(v -> popupWindow.show(this));
+    }
+
+    public MyActionBar addCenterView(View view) {
+        if (llcontainer != null) {
+            llcontainer.removeAllViews();
+            llcontainer.addView(view);
+        }
+        return this;
+    }
+
+    public MyActionBar addCenterViewClickListener(View view) {
+        abCallBack.onCenterViewClick(view);
+        return this;
+    }
+
+    public MyActionBar setHomeIcon(int resId) {
+        if (mContext != null) {
+            Picasso.with(mContext)
+                    .load(resId)
+                    .error(R.drawable.titlebar_back_press)
+                    .into(ivBack);
+        }
+        return this;
+    }
+
+
+    public MyActionBar isShowBack(boolean isShow) {
+        if (!isShow) {
+            ivBack.setVisibility(INVISIBLE);
+        } else {
+            ivBack.setVisibility(VISIBLE);
+        }
+        return this;
+    }
+
+    public MyActionBar addMenuList(List<mypopupwindow.menuentity> menuEntityList) {
+        popupWindow = new MyPopupWindow(mContext);
+        popupWindow.addMenuList(menuEntityList)
+                .addOnItemClickLisenter((parent, view, position, id) -> {
+                    abCallBack.onRightClick(position);
+                    popupWindow.dismiss();
+                }).build();
+
+        return this;
+    }
+
+    public MyActionBar setABCallBack(AbCallBack abCallBack) {
+        this.abCallBack = abCallBack;
+        return this;
+    }
+
+    public MyActionBar withTitle(String title) {
+        tvTitle.setText(title);
+        return this;
+    }
+
+
+}
+ </mypopupwindow.menuentity></pre>
+
+<p>AbCallBack （ActionBar点击事件回调）源码：</p>
+<pre>
+public interface AbCallBack {
+    void onBackClick();
+    void onRightClick();
+}
+</pre>
+
+<p>更多使用方法详见github:</p>
+<p>github :    <a href="https://github.com/momentslz/openobj" target="_blank" rel="noopener">https://github.com/momentslz/openobj</a></p>
+<p>更多内容请添加本人公众号：</p>
+<p><img src="http://liuzheng.space/img/share.jpg" width="300px"></p>
+
+  </section>
+
+</article>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@Longbo Ma</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="http://github.com/onevcat/vno" target="_blank">Vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+</body>
+</html>
