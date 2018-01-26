@@ -1,11 +1,10 @@
 # Hexo Configuration
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
-
 # Site
 title: 刘正的技术博客
-subtitle: 
-description:
+subtitle: 胆小认生，不易相处
+description: 擅长Android技能,深入研究移动端开发,此为博客一枚。
 author: moment
 language:
 timezone:
@@ -65,12 +64,12 @@ pagination_dir: page
 #theme: landscape
 #theme: yilia
 #theme: light-ch
-#theme: even
-theme: athena
-#theme: TKL
+theme: vno
+#theme: athena
+#theme: flat
 plugin: hexo-generator-feed
 #Feed Atom
-feed:     
+feed:
 type: atom
 path: atom.xml
 limit: 20
