@@ -63,10 +63,10 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 #theme: landscape
-#theme: yilia
+theme: yilia
 #theme: light-ch
 #theme: even
-theme: athena
+#theme: athena
 #theme: TKL
 plugin: hexo-generator-feed
 #Feed Atom

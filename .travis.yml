@@ -28,4 +28,4 @@ branches:
     - develop
 env:
  global:
-   - GH_REF: github.com/momentslz/momentslz.github.io.git
+   - GH_REF: github.com/momentslz/momentslz.github.io
