@@ -1,7 +1,7 @@
 layout: article
 title: Android中处理耗时操作的几种方法
 date: 2018-01-29 09:30:46
-tags: toolbar actionbar
+tags: handler LopperThread AsyncTask IntentService
 ---
 # 耗时操作的几种操作方式
 ### Thread Handler Looper MessageQueue
