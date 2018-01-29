@@ -9,7 +9,7 @@ tags: BroadcastReceiver IntentService
 待完善：Action日志当前页面功能、本地存储的上传规则
 
 框架功能简介
-<img src="https://github.com/momentslz/logconverge/blob/master/log.png" width="900px" height="600px"/>
+<img src="http://liuzheng.space/img/log.png" width="900px" height="600px"/>
 # 使用
 在需要使用的module的gradle中添加：
 ```
@@ -137,7 +137,7 @@ ACTION日志(ActionLog)
 
 示例：
 
-<img height=480 width=320 src="https://github.com/momentslz/logconverge/blob/master/download.gif">
+<img height=480 width=320 src="http://liuzheng.space/img/download.gif">
 
 
 |- 在Manifest中进行Service注册
