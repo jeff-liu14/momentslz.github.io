@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>使用IntentService进行apk更新 | 刘正的技术博客</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="使用IntentService进行apk更新 | 刘正的技术博客">
+    <meta name="twitter:description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="使用IntentService进行apk更新 | 刘正的技术博客">
+    <meta property="og:description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    
+    <meta name="author" content="moment">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2018/01/29/apk更新/"/>
+
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 刘正的技术博客 的主页"><img src="/images/crop_photo.jpg" width="80" alt="刘正的技术博客 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 刘正的技术博客">刘正的技术博客</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">胆小认生，不易相处</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">擅长Android技能,深入研究移动端开发,此为博客一枚。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/momentslz" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-01-29T09:20:46.000Z" class="post-list__meta--date date">2018-01-29</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/BroadcastReceiver-IntentService/">BroadcastReceiver IntentService</a>
+</span>
+    </div>
+    <h1 class="post-title">使用IntentService进行apk更新</h1>
+  </header>
+
+  <section class="post">
+    <p>通常在使用service更新应用时最常出现的问题就是Notification进度的更新问题、service在什么时间关闭以及需要我们自己在Service中创建新的线程处理耗时操作，当然这种也是可以实现的但是会显得略微繁琐<br>经过对比发现可以使用IntentService已经实现了对耗时操作的包装出来，我们只需要实现IntentService中的onHandleIntent方法就可以在其中进行耗时操作的处理，在处理下载问题时发现在使用intentservice时暂时没有发现可以优雅的进行进度回调的实现方法，所以我这边使用了本地广播的形式来进行进度刷新。</p>
+<p>添加了当前状态判断，当应用处于前台状态时直接进行安装，当应用处于后台时弹出notification弹窗点击后安装，示例如下图：</p>
+<p><img height="480" width="320" src="https://github.com/momentslz/logconverge/blob/master/download.gif"></p>
+<p>先创建广播</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public static class MyBroadcastReceiver extends BroadcastReceiver &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void onReceive(Context context, Intent intent) &#123;</span><br><span class="line">            switch (intent.getAction()) &#123;</span><br><span class="line">                case ACTION_TYPE_PREPARE:</span><br><span class="line">                    if (downloadCallback != null) &#123;</span><br><span class="line">                        downloadCallback.onPrepare();</span><br><span class="line">                    &#125;</span><br><span class="line">                    break;</span><br><span class="line">                case ACTION_TYPE_PROGRESS:</span><br><span class="line">                    int progress = intent.getIntExtra(&quot;progress&quot;, 0);</span><br><span class="line">//                    Log.d(&quot;progress&quot;, &quot;|- &quot; + progress + &quot; -|&quot;);</span><br><span class="line">                    if (downloadCallback != null) &#123;</span><br><span class="line">                        downloadCallback.onProgress(progress);</span><br><span class="line">                    &#125;</span><br><span class="line">                    break;</span><br><span class="line">                case ACTION_TYPE_COMPLETE:</span><br><span class="line">                    String file_path = intent.getStringExtra(&quot;file_path&quot;);</span><br><span class="line">                    if (!TextUtils.isEmpty(file_path)) &#123;</span><br><span class="line">                        File file = new File(file_path);</span><br><span class="line">                        if (file.exists()) &#123;</span><br><span class="line">                            if (downloadCallback != null) &#123;</span><br><span class="line">                                downloadCallback.onComplete(file);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    break;</span><br><span class="line">                case ACTION_TYPE_FAIL:</span><br><span class="line">                    String error = intent.getStringExtra(&quot;error&quot;);</span><br><span class="line">                    if (downloadCallback != null) &#123;</span><br><span class="line">                        downloadCallback.onFail(error + &quot;&quot;);</span><br><span class="line">                    &#125;</span><br><span class="line">                    break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>然后在IntentService中初始化本地广播并发送信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public void onCreate() &#123;</span><br><span class="line">        super.onCreate();</span><br><span class="line">        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 在下载进度刷新的地方进行回调</span><br><span class="line">    private void progress(int progress) &#123;</span><br><span class="line">        Intent intent = new Intent(FileDownloaderManager.ACTION_TYPE_PROGRESS);</span><br><span class="line">        intent.putExtra(&quot;progress&quot;, progress);</span><br><span class="line">        mLocalBroadcastManager.sendBroadcast(intent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void downApk(String url) &#123;</span><br><span class="line">    .....</span><br><span class="line">    .....</span><br><span class="line">     progress(progress);</span><br><span class="line">    .....</span><br><span class="line">    .....</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在activity中使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mLocalBroadcastManager = LocalBroadcastManager.getInstance(mContext);</span><br><span class="line">mBroadcastReceiver = new MyBroadcastReceiver();</span><br><span class="line">IntentFilter intentFilter = new IntentFilter();</span><br><span class="line">intentFilter.addAction(ACTION_TYPE_PREPARE);</span><br><span class="line">intentFilter.addAction(ACTION_TYPE_PROGRESS);</span><br><span class="line">intentFilter.addAction(ACTION_TYPE_COMPLETE);</span><br><span class="line">intentFilter.addAction(ACTION_TYPE_FAIL);</span><br><span class="line">mLocalBroadcastManager.registerReceiver(mBroadcastReceiver, intentFilter);</span><br><span class="line">// ondestory时调用</span><br><span class="line">mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);</span><br></pre></td></tr></table></figure>
+<p>以上源码已进行封装，方便使用具体操作步骤如下：<br>|- 初始化及注册回调</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//初始化文件下载管理类</span><br><span class="line">FileDownloaderManager.init(context)</span><br><span class="line">// 注册下载进度监听，并开启广播接收</span><br><span class="line">FileDownloaderManager.registerDownload(object : FileDownloaderManager.DownloadCallback &#123;</span><br><span class="line">            override fun onComplete(file: File) = mainView.downloadSucc(file)</span><br><span class="line"></span><br><span class="line">            override fun onFail(msg: String?) = Unit</span><br><span class="line"></span><br><span class="line">            override fun onProgress(progress: Int) = mainView.onProgress(progress)</span><br><span class="line"></span><br><span class="line">            override fun onPrepare() = Unit</span><br><span class="line"></span><br><span class="line">        &#125;)</span><br><span class="line">//开始下载</span><br><span class="line">FileDownloaderManager.download(url)</span><br></pre></td></tr></table></figure>
+<p>|- 在下载完成后进行资源重置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FileDownloaderManager.unbinder()</span><br></pre></td></tr></table></figure>
+<p>源码地址：<a href="https://github.com/momentslz/logconverge/tree/master/logconverge/src/main/java/com/moment/logconverge/download" target="_blank" rel="noopener">源码地址</a><br>文档地址：<a href="https://github.com/momentslz/logconverge" target="_blank" rel="noopener">文档地址</a></p>
+
+  </section>
+
+</article>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@Longbo Ma</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="http://github.com/onevcat/vno" target="_blank">Vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+</body>
+</html>
