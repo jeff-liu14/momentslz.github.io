@@ -10,12 +10,12 @@ MVP模式是从MVVM 模式转化而来，MVVM是Model-View-ViewModel的简写,�
 
 MVC 模式是model view 和 controller 三者之间可以互相通信，但是这样就存在一个问题，就是view层可以调用model层和controller层的代码，所以会导致逻辑混乱。
 
-<img src="http://liuzheng.space/img/mvc.png" width="400px">
+<img src="http://liuzheng.space/images/mvc.png" width="400px">
 
 >	2、MVP
 MVP 是Model view 和 Presenter 组成，MVP最大的好处就是剥离了Presenter层出来替换掉了Controller，从而使得model 层和view层不能直接进行通信，必须通过presenter层间接进行通信，一般来说一个Activity只有一个presenter层来控制逻辑，但是在复杂的Activity中可以通过绑定多个Presenter来实现复杂的逻辑。
 
-<img src="http://liuzheng.space/img/mvp.png" width="400px">
+<img src="http://liuzheng.space/images/mvp.png" width="400px">
 
 下面为大家展示下我已经封装好的逻辑代码：
 
@@ -243,7 +243,7 @@ github :	[https://github.com/momentslz](https://github.com/momentslz)
 
 更多内容请添加本人公众号：
 
-<img src="http://liuzheng.space/img/share.jpg" width="300px">
+<img src="http://liuzheng.space/images/share.jpg" width="300px">
 
 
 

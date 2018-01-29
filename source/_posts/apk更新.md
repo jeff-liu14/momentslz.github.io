@@ -9,7 +9,7 @@ tags: BroadcastReceiver IntentService
 
 添加了当前状态判断，当应用处于前台状态时直接进行安装，当应用处于后台时弹出notification弹窗点击后安装，示例如下图：
 
-<img height=480 width=320 src="http://liuzheng.space/img/download.gif">
+<img height=480 width=320 src="http://liuzheng.space/images/download.gif">
 
 先创建广播
 
