@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://yoursite.com/2018/01/26/Mvp模式解析/"/>
+    <link rel="canonical" href="http://yoursite.com/2018/01/29/Mvp模式解析/"/>
 
     
 </head>
@@ -123,7 +123,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2018-01-26T03:47:04.000Z" class="post-list__meta--date date">2018-01-26</time> &#8226; <span class="post-meta__tags tags">于&nbsp;</span>
+      <time datetime="2018-01-29T09:59:23.452Z" class="post-list__meta--date date">2018-01-29</time> &#8226; <span class="post-meta__tags tags">于&nbsp;</span>
     </div>
     <h1 class="post-title">MVP模式解析</h1>
   </header>
@@ -136,11 +136,11 @@
 <p>   1、MVC</p>
 </blockquote>
 <p>MVC 模式是model view 和 controller 三者之间可以互相通信，但是这样就存在一个问题，就是view层可以调用model层和controller层的代码，所以会导致逻辑混乱。</p>
-<p><img src="http://liuzheng.space/img/mvc.png" width="400px"></p>
+<p><img src="http://liuzheng.space/images/mvc.png" width="400px"></p>
 <blockquote>
 <p>   2、MVP<br>MVP 是Model view 和 Presenter 组成，MVP最大的好处就是剥离了Presenter层出来替换掉了Controller，从而使得model 层和view层不能直接进行通信，必须通过presenter层间接进行通信，一般来说一个Activity只有一个presenter层来控制逻辑，但是在复杂的Activity中可以通过绑定多个Presenter来实现复杂的逻辑。</p>
 </blockquote>
-<p><img src="http://liuzheng.space/img/mvp.png" width="400px"></p>
+<p><img src="http://liuzheng.space/images/mvp.png" width="400px"></p>
 <p>下面为大家展示下我已经封装好的逻辑代码：</p>
 <p>model :</p>
 <pre><code>
@@ -283,7 +283,7 @@ public class MainPresenter {
 <p>更多详情见github openobj:</p>
 <p>github :    <a href="https://github.com/momentslz" target="_blank" rel="noopener">https://github.com/momentslz</a></p>
 <p>更多内容请添加本人公众号：</p>
-<p><img src="http://liuzheng.space/img/share.jpg" width="300px"></p>
+<p><img src="http://liuzheng.space/images/share.jpg" width="300px"></p>
 
   </section>
 
