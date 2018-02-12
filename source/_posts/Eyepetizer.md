@@ -52,7 +52,7 @@ title:	仿开眼视频Android客户端
 # Demo下载
 
 网页下载：
-[下载地址](https://www.pgyer.com/app/qrcode/HBap)
+[下载地址](https://www.pgyer.com/O4Pf)
 
 二维码下载：
-![下载地址](https://www.pgyer.com/app/qrcode/HBap)
+![下载地址](https://www.pgyer.com/app/qrcode/O4Pf)
