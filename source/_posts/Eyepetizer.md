@@ -7,6 +7,7 @@ title:	仿开眼视频Android客户端
 [简书](https://www.jianshu.com/u/e687a486a27c)
 [掘金](https://juejin.im/user/57102c3c71cfe40067537379/posts)
 [blog](http://liuzheng.space/#blog)
+[源码地址](https://github.com/momentslz/Eyepetizer)
 
 ## 技术栈
 
