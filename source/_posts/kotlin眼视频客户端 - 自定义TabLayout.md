@@ -1,4 +1,6 @@
-# kotlin眼视频客户端 - 自定义TabLayout
+---
+title:	kotlin眼视频客户端 - 自定义TabLayout
+---
 
 本文为[kotlin仿开眼视频Android客户端](https://www.jianshu.com/p/50abaafc2d53)的后续补充内容，本篇为大家介绍如何对TabLayout进行定制使用，基于项目需求，本篇主要对部分功能进行了定制，如：指示器距离文字的距离、文字选中加粗、文字选中变大等
 
