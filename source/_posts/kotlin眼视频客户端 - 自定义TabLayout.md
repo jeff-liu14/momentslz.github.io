@@ -39,7 +39,7 @@ title:	kotlin眼视频客户端 - 自定义TabLayout
 ### 属性参数详解
 
 | 参数  | 用处 |
-|:------------- |:---------------:|
+| ------------- |:---------------:|
 | textNormalSize  | tab未被选中时字体大小 |
 | textSelectSize  | tab被选中时字体大小 |
 | textNormalColor  | tab未被选中时字体颜色 |
