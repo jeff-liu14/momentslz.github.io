@@ -38,21 +38,21 @@ title:	kotlin眼视频客户端 - 自定义TabLayout
 ```
 ### 属性参数详解
 
-参数  | 用处
-------------- | -------------
-textNormalSize  | tab未被选中时字体大小
-textSelectSize  | tab被选中时字体大小
-textNormalColor  | tab未被选中时字体颜色
-textSelectColor  | tab被选中时字体颜色
-underLineHeight  | tablayout下面整个一条的线的高度
-underlineColor  | tablayout下面整个一条的线的颜色
-indicatorHeight  | 文字下方指示器的高度
-indicatorWidth  | 文字下方指示器的宽度
-indicatorSpacing  | 文字下方指示器距离上面文字的间距
-indicatorColor  | 文字下方指示器的颜色
-isTextBold  | 文字选中时是否加粗
-tabPadding  | 文字左右间的间隙大小
-tabSpaceEqual  | tab中的文字是否等分tablayout的宽度，参考效果-2
+| 参数  | 用处 |
+|:------------- |:---------------:|
+| textNormalSize  | tab未被选中时字体大小 |
+| textSelectSize  | tab被选中时字体大小 |
+| textNormalColor  | tab未被选中时字体颜色 |
+| textSelectColor  | tab被选中时字体颜色 |
+| underLineHeight  | tablayout下面整个一条的线的高度 |
+| underlineColor  | tablayout下面整个一条的线的颜色 |
+| indicatorHeight  | 文字下方指示器的高度 |
+| indicatorWidth  | 文字下方指示器的宽度 |
+| indicatorSpacing  | 文字下方指示器距离上面文字的间距 |
+| indicatorColor  | 文字下方指示器的颜色 |
+| isTextBold  | 文字选中时是否加粗 |
+| tabPadding  | 文字左右间的间隙大小 |
+| tabSpaceEqual  | tab中的文字是否等分tablayout的宽度，参考效果-2 |
 
 ### 与viewpager合并使用
 
