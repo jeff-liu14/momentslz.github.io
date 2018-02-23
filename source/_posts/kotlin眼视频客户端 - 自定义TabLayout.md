@@ -44,8 +44,8 @@ title:	kotlin眼视频客户端 - 自定义TabLayout
  textSelectSize  | tab被选中时字体大小 
  textNormalColor  | tab未被选中时字体颜色 
  textSelectColor  | tab被选中时字体颜色 
- underLineHeight  | tablayout下面整个一条的线的高度 
- underlineColor  | tablayout下面整个一条的线的颜色 
+ underLineHeight  |  tablayout下面整个一条的线的高度 
+ underlineColor  |  tablayout下面整个一条的线的颜色 
  indicatorHeight  | 文字下方指示器的高度 
  indicatorWidth  | 文字下方指示器的宽度 
  indicatorSpacing  | 文字下方指示器距离上面文字的间距 
