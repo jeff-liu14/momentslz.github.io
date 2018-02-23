@@ -125,7 +125,7 @@
   
     
     <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/01/29/Android中处理耗时操作的几种方法/" title="link to post.title">Android中处理耗时操作的几种方法</a></h2>
+      <h2 class="post-list__post-title post-title"><a href="/2018/01/29/Android中处理耗时操作的几种方法/" title="link to post.title">Handler、AsyncTask、HandlerThread和IntentService之间的对比</a></h2>
       <p class="excerpt">
     
       耗时操作的几种操作方式Thread Handler Looper MessageQueue创建handler时会创建looer对象并用looper中的messageQueue对象初始化当前messageQueue当使用handler发送消息时会有两种方式发送：sendMessage和dispatchMessage前者发送的消息会直接发送至messageQueue中通过looper对象循环处理并将结果转发至handler的handleMessage方法中经过了线程之间的切换后者则通过判断是否存在R
