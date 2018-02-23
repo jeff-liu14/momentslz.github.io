@@ -1,5 +1,5 @@
 layout: article
-title: Android中处理耗时操作的几种方法
+title: Handler、AsyncTask、HandlerThread和IntentService之间的对比
 date: 2018-01-29 09:30:46
 tags: handler LopperThread AsyncTask IntentService
 ---
