@@ -39,7 +39,7 @@ title:	kotlin眼视频客户端 - 自定义TabLayout
 ### 属性参数详解
 
 | 参数  | 用处 |
-| ------------- |:---------------:|
+|:-------------|:---------------:|
 | textNormalSize  | tab未被选中时字体大小 |
 | textSelectSize  | tab被选中时字体大小 |
 | textNormalColor  | tab未被选中时字体颜色 |
@@ -53,6 +53,16 @@ title:	kotlin眼视频客户端 - 自定义TabLayout
 | isTextBold  | 文字选中时是否加粗 |
 | tabPadding  | 文字左右间的间隙大小 |
 | tabSpaceEqual  | tab中的文字是否等分tablayout的宽度，参考效果-2 |
+
+| 排序方法 | 平均情况 | 最好情况 | 最坏情况 | 辅助空间 | 稳定性 |
+|:-----|:-----|:-----|:-----|:-----|:-----|
+| 冒泡排序 | O(n²) | O(nlogn) | O(n²) | O(1) | 稳定 |
+| 简单选择 | O(n²) | O(n²) | O(n²) | O(1) | 稳定 |
+| 直接插入 | O(n²) | O(n) | O(n²) | O(1) | 稳定 |
+| 希尔排序 | O(nlogn)~O(n²) | O(n^1.3) | O(n²) | O(1) | 不稳定 |
+| 堆排序 | O(nlogn) | O(nlogn) | O(nlogn) | O(1) | 不稳定 |
+| 归并排序 | O(nlogn) | O(nlogn) | O(nlogn) | O(n) | 不稳定 |
+| 快速排序 | O(nlogn) | O(nlogn) | O(n²) | O(nlogn)~O(n) | 不稳定 |
 
 ### 与viewpager合并使用
 
