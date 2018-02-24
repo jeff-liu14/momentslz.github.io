@@ -15,6 +15,8 @@ title:	仿开眼视频Android客户端
 
 [SlidingTabLayout](https://github.com/H07000223/FlycoTabLayout/blob/master/README_CN.md)
 
+[仿写SlidingTabLayout文章地址 : https://www.jianshu.com/p/c283a2403190](https://www.jianshu.com/p/c283a2403190)
+
 [rxandroid](https://github.com/ReactiveX/RxAndroid)
 
 [RxRelay](https://github.com/JakeWharton/RxRelay)
