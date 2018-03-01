@@ -38,6 +38,8 @@ class ImageLoad {
 
     open fun load(context: WeakReference<Context>, url: String?, image: ImageView?) {
         if (image == null) return
+         // 具体图片加载实现可以使用第三方框架加载，也可以自己实现，
+         这里提供Glide4.0的使用示例：
         var requestOptions = RequestOptions().centerCrop()
                 .placeholder(R.drawable.default_banner)
                 .error(R.drawable.default_banner)
@@ -56,101 +58,27 @@ class ImageLoad {
 
     open fun load(context: WeakReference<Context>, url: String?, image: ImageView?, transformation: BitmapTransformation) {
         if (image == null) return
-        var requestOptions = RequestOptions()
-                .placeholder(R.drawable.default_banner)
-                .error(R.drawable.default_banner)
-                .transform(transformation)
-                .format(DecodeFormat.PREFER_RGB_565)
-                .priority(Priority.LOW)
-                .dontAnimate()
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-
-        Glide.with(context.get()!!.applicationContext)
-                .load(url)
-                .apply(requestOptions)
-                .into(object : DrawableImageViewTarget(image) {
-                })
+         // 具体图片加载逻辑
     }
 
     open fun load(holder: Int, context: WeakReference<Context>, url: String, image: ImageView?, width: Int, height: Int) {
         if (image == null) return
-        var lp = image.layoutParams
-        lp.width = width
-        lp.height = height
-        image.layoutParams = lp
-        var requestOptions = RequestOptions().centerCrop()
-                .placeholder(holder)
-                .override(width, height)
-                .format(DecodeFormat.PREFER_RGB_565)
-                .error(holder)
-                .transform(CenterCrop())
-                .dontAnimate()
-                .priority(Priority.LOW)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-
-        Glide.with(context.get()!!.applicationContext)
-                .load(url)
-                .apply(requestOptions)
-                .into(object : DrawableImageViewTarget(image) {
-                })
+        // 具体图片加载逻辑
     }
 
     open fun loadCircle(context: WeakReference<Context>, url: String?, image: ImageView?, width_height: Int) {
         if (image == null) return
-        var lp = image.layoutParams
-        lp.width = DensityUtil.dip2px(context.get()!!, width_height.toFloat())
-        lp.height = DensityUtil.dip2px(context.get()!!, width_height.toFloat())
-        image.layoutParams = lp
-        var requestOptions = RequestOptions().centerCrop()
-                .placeholder(R.drawable.default_icon)
-                .error(R.drawable.default_icon)
-                .format(DecodeFormat.PREFER_RGB_565)
-                .transform(CenterCrop())
-                .override(DensityUtil.dip2px(context.get()!!, width_height.toFloat()))
-                .dontAnimate()
-                .priority(Priority.LOW)
-                .transform(CircleCrop())
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-
-        if (url == null) {
-            Glide.with(context.get()!!.applicationContext)
-                    .load(R.drawable.default_icon)
-                    .apply(requestOptions)
-                    .into(object : DrawableImageViewTarget(image) {
-                    })
-        } else {
-            Glide.with(context.get()!!.applicationContext)
-                    .load(url)
-                    .apply(requestOptions)
-                    .into(object : DrawableImageViewTarget(image) {
-                    })
-        }
+         // 具体图片加载逻辑
     }
 
     open fun loadRound(context: WeakReference<Context>, url: String, image: ImageView?, width: Int, height: Int, round: Int) {
         if (image == null) return
-        var lp = image.layoutParams
-        lp.width = width
-        lp.height = height
-        image.layoutParams = lp
-        var requestOptions = RequestOptions().centerCrop()
-                .placeholder(R.drawable.default_banner)
-                .error(R.drawable.default_banner)
-                .format(DecodeFormat.PREFER_RGB_565)
-                .override(width, height)
-                .priority(Priority.LOW)
-                .dontAnimate()
-                .transforms(CenterCrop(), RoundedCorners(DensityUtil.dip2px(context.get()!!, round.toFloat())))
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-
-        Glide.with(context.get()!!.applicationContext)
-                .load(url)
-                .apply(requestOptions)
-                .into(object : DrawableImageViewTarget(image) {
-                })
+         // 具体图片加载逻辑
     }
 
     open fun clearCache(context: WeakReference<Context>) {
+        // 强制清楚缓存，可以为内存缓存也可以为硬盘缓存
+        Glide使用示例：
         Glide.get(context.get()!!.applicationContext).clearMemory()
         System.gc()
     }
@@ -172,7 +100,7 @@ ImageLoad().loadRound(WeakReference(mContext), briefCard["icon"].toString(), hol
 
 ```
 
-载列表加载图片时会使应用的内存上升，但Glide提供给我们一个API来减少在列表加载时会损耗不必要的内存的方法，以recyclerview 为例：
+在列表加载图片时会使应用的内存上升，但Glide提供给我们一个API来减少在列表加载时会损耗不必要的内存的方法，以recyclerview 为例：
 
 ```
 recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
