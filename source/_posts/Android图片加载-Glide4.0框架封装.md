@@ -101,7 +101,7 @@ ImageLoad().loadRound(WeakReference(mContext), briefCard["icon"].toString(), hol
 ```
 
 在列表加载图片时会使应用的内存上升，但Glide提供给我们一个API来减少在列表加载时会损耗不必要的内存的方法，以recyclerview 为例：
-
+Android SD卡下载路径切换.md
 ```
 recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
