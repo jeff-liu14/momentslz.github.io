@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Android SD卡下载路径切换 | 刘正的技术博客</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Android SD卡下载路径切换 | 刘正的技术博客">
+    <meta name="twitter:description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Android SD卡下载路径切换 | 刘正的技术博客">
+    <meta property="og:description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    
+    <meta name="author" content="moment">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2018/03/22/Android SD卡下载路径切换/"/>
+
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 刘正的技术博客 的主页"><img src="/images/crop_photo.jpg" width="80" alt="刘正的技术博客 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 刘正的技术博客">刘正的技术博客</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">胆小认生，不易相处</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">擅长Android技能,深入研究移动端开发,此为博客一枚。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/momentslz" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-03-22T07:07:25.368Z" class="post-list__meta--date date">2018-03-22</time> &#8226; <span class="post-meta__tags tags">于&nbsp;</span>
+    </div>
+    <h1 class="post-title">Android SD卡下载路径切换</h1>
+  </header>
+
+  <section class="post">
+    <h3 id="存储机制原理及初始化"><a href="#存储机制原理及初始化" class="headerlink" title="存储机制原理及初始化"></a>存储机制原理及初始化</h3><p>Android存储机制   </p>
+<blockquote>
+<p><a href="http://mafei.me/2017/12/19/Android%20%7C%20%E5%9B%BE%E8%A7%A3%E5%A4%96%E9%83%A8%E5%AD%98%E5%82%A8%E5%92%8C%E5%86%85%E9%83%A8%E5%AD%98%E5%82%A8/" target="_blank" rel="noopener">原文链接: Android | 图解外部存储和内部存储</a></p>
+<p>内外部存储的区别</p>
+<p>按照内外部存储：带External字眼则一定是外部存储的方法，如 getExternalFilesDir() ，外 部存储需要运行时权限；</p>
+<p>按照公有私有性质：公有文件是Environment调用函数，而私有文件（包括内部私有与外部私有）是Context调用函数，公有文件不会随着app卸载而删除而私有则会，私有文件不会被Media Scanner扫描到。</p>
+</blockquote>
+<p>需求描述   </p>
+<blockquote>
+<p>本人目前从事漫画类型APP开发，用户使用中低端机型（红米、oppo等）比例较高因此用户需要可以对下载路径进行修改因此有此次文章</p>
+</blockquote>
+<p>先上效果图</p>
+<p><img width="200" height="400" src="https://github.com/momentslz/Eyepetizer/blob/master/img/download_path.png?raw=true"><img width="200" height="400" src="https://github.com/momentslz/Eyepetizer/blob/master/img/download_dialog.png?raw=true"></p>
+<p>Application初始化</p>
+<blockquote>
+<p>初始化类：SdCardManager</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// packageName:应用applicationId 用来创建私有存储路径</span><br><span class="line">SdCardManager.getInstance().init(this, packageName)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>MainActivity初始化当前可用路径</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 初始化获取手机存储权限</span><br><span class="line"> * 默认存储路径为SD卡，当SD卡不存在或不可用时切换使用手机内存</span><br><span class="line"> */</span><br><span class="line">RxPermissions(this)</span><br><span class="line">                .request(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)</span><br><span class="line">                .subscribe(&#123; aBoolean -&gt;</span><br><span class="line">                    if (aBoolean) &#123;</span><br><span class="line">                        if (SdCardManager.getInstance().isDiskAvailable) &#123;</span><br><span class="line">                            if (SdCardManager.getInstance().isNullPath) &#123;</span><br><span class="line">                                SdCardManager.getInstance().changePath(SdCardManager.DownloadPath.SDCARD)</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            SdCardManager.getInstance().changePath(SdCardManager.DownloadPath.CACHE)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        SdCardManager.getInstance().changePath(SdCardManager.DownloadPath.CACHE)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, &#123; &#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>获取手机存储路径类相关代码,具体源码参考详见: <a href="https://www.aliyun.com/jiaocheng/96447.html" target="_blank" rel="noopener">Android文件存储位置切换</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 获取存储设备及容量信息</span><br><span class="line"> */</span><br><span class="line">public static List&lt;MyStorageVolume&gt; getVolumeList(Context context) &#123;</span><br><span class="line">    List&lt;MyStorageVolume&gt; svList = new ArrayList&lt;MyStorageVolume&gt;(3);</span><br><span class="line">    StorageManager mStorageManager = (StorageManager) context</span><br><span class="line">            .getSystemService(Activity.STORAGE_SERVICE);</span><br><span class="line">    try &#123;</span><br><span class="line">        Method mMethodGetPaths = mStorageManager.getClass().getMethod(&quot;getVolumeList&quot;);</span><br><span class="line">        Object[] list = (Object[]) mMethodGetPaths.invoke(mStorageManager);</span><br><span class="line">        for (Object item : list) &#123;</span><br><span class="line">            svList.add(new MyStorageVolume(context, item));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    return svList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>创建本地存储路径及SD卡存储路径文件夹,相关理论参考文章: <a href="http://blog.csdn.net/u010937230/article/details/73303034" target="_blank" rel="noopener">彻底搞懂Android文件存储—内部存储，外部存储以及各种存储路径解惑</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public static void createDir(Application application) &#123;</span><br><span class="line">        File[] files;</span><br><span class="line">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.KITKAT) &#123;</span><br><span class="line">            files = application.getExternalFilesDirs(&quot;download&quot;);</span><br><span class="line">            for (File file : files) &#123;</span><br><span class="line">                if (!file.exists()) &#123;</span><br><span class="line">                    file.mkdirs();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        File file = getExternalStorageDirectory();</span><br><span class="line">        if (!file.exists()) &#123;</span><br><span class="line">            file.mkdirs();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        File file1 = application.getExternalFilesDir(&quot;download&quot;);</span><br><span class="line">        if (!file1.exists()) &#123;</span><br><span class="line">            file1.mkdirs();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        File sdcard = new File(SdCardManager.getInstance().getDiskDownloadDir());</span><br><span class="line">        if (!sdcard.exists()) &#123;</span><br><span class="line">            sdcard.mkdirs();</span><br><span class="line">        &#125;</span><br><span class="line">        File cache = new File(SdCardManager.getInstance().getCacheDownloadDir());</span><br><span class="line">        if (!cache.exists()) &#123;</span><br><span class="line">            cache.mkdirs();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="路径切换"><a href="#路径切换" class="headerlink" title="路径切换"></a>路径切换</h3><blockquote>
+<p>获取当前使用存储路径,通过SdCardManager类获取当前正在使用中的存储路径并显示</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">private fun getDownloadPath() &#123;</span><br><span class="line">        if (SdCardManager.getInstance().isDiskNow) &#123;</span><br><span class="line">            val builder = StringBuilder(activity.getString(R.string.download_path_dialog_sdcard) + &quot;:&quot;)</span><br><span class="line">            builder.append(SdCardManager.getInstance().diskDownloadDir + &quot;&quot;)</span><br><span class="line">            tv_download.text = builder.toString()</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            val builder = StringBuilder(activity.getString(R.string.download_path_dialog_phone) + &quot;:&quot;)</span><br><span class="line">            builder.append(SdCardManager.getInstance().cacheDownloadDir + &quot;&quot;)</span><br><span class="line">            tv_download.text = builder.toString()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>存储路径选择</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private fun showPathDialog() &#123;</span><br><span class="line">        RxPermissions(activity)</span><br><span class="line">                .request(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)</span><br><span class="line">                .subscribe(&#123; aBoolean -&gt;</span><br><span class="line">                    if (aBoolean!!) &#123;</span><br><span class="line">                        val dialog = PathDialog(activity)</span><br><span class="line">                        dialog.setOnPathChangeLisenter &#123;</span><br><span class="line">                            getDownloadPath()</span><br><span class="line">                            dialog.dismiss()</span><br><span class="line">                        &#125;</span><br><span class="line">                        dialog.show()</span><br><span class="line">                        dialog.setCanceledOnTouchOutside(true)</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        Toast.makeText(activity, &quot;无此权限，无法打开此功能！&quot;, Toast.LENGTH_SHORT).show()</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;) &#123; &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>存储路径选择就涉及到存储路径获取，及存储路径大小获取，相关操作均在dialog中完成初始化及相关操作，关键代码如下：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// 判断SD卡是否可用</span><br><span class="line">       if (SdCardManager.getInstance().isDiskAvailable()) &#123;</span><br><span class="line">           rl_sdcard.setVisibility(View.VISIBLE);</span><br><span class="line">           String sdcard = SdCardManager.getInstance().getSdcardName();</span><br><span class="line">           String size = &quot;剩余&quot;</span><br><span class="line">                   + StorageVolumeUtil.getSizeStr(StorageVolumeUtil.getAvailableSize(sdcard)) + &quot;可用，共&quot;</span><br><span class="line">                   + StorageVolumeUtil.getSizeStr(StorageVolumeUtil.getTotalSize(sdcard));</span><br><span class="line">           tv_sdcard_size.setText(&quot;&quot; + size);</span><br><span class="line">       &#125; else &#123;</span><br><span class="line">           rl_sdcard.setVisibility(View.GONE);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       // 获取手机存储路径</span><br><span class="line">       String phone = SdCardManager.getInstance().getCacheName();</span><br><span class="line">       // 计算路径大小</span><br><span class="line">       String size = &quot;剩余&quot;</span><br><span class="line">               + StorageVolumeUtil.getSizeStr(StorageVolumeUtil.getAvailableSize(phone)) + &quot;可用，共&quot;</span><br><span class="line">               + StorageVolumeUtil.getSizeStr(StorageVolumeUtil.getTotalSize(phone));</span><br><span class="line">       tv_phone_size.setText(&quot;&quot; + size);</span><br><span class="line">       if (SdCardManager.getInstance().isDiskNow()) &#123;</span><br><span class="line">           rb_sdcard.setChecked(true);</span><br><span class="line">           rb_phone.setChecked(false);</span><br><span class="line">       &#125; else &#123;</span><br><span class="line">           rb_sdcard.setChecked(false);</span><br><span class="line">           rb_phone.setChecked(true);</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/momentslz/Eyepetizer/tree/master/sdkmanager/src/main/java/com/example/sdkmanager" target="_blank" rel="noopener">源码地址: https://github.com/momentslz/Eyepetizer</a><br>欢迎大家多多star鼓励作者产出更多文章~~~ </p>
+
+  </section>
+
+</article>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@Longbo Ma</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="http://github.com/onevcat/vno" target="_blank">Vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+</body>
+</html>
