@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Android窗口管理框架源码解析整理 | 刘正的技术博客</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Android窗口管理框架源码解析整理 | 刘正的技术博客">
+    <meta name="twitter:description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Android窗口管理框架源码解析整理 | 刘正的技术博客">
+    <meta property="og:description" content="擅长Android技能,深入研究移动端开发,此为博客一枚。">
+
+    
+    <meta name="author" content="moment">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2018/09/10/Android窗口管理框架源码解析/"/>
+
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 刘正的技术博客 的主页"><img src="/images/crop_photo.jpg" width="80" alt="刘正的技术博客 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 刘正的技术博客">刘正的技术博客</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">胆小认生，不易相处</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">擅长Android技能,深入研究移动端开发,此为博客一枚。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/momentslz" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-09-10T07:11:23.014Z" class="post-list__meta--date date">2018-09-10</time> &#8226; <span class="post-meta__tags tags">于&nbsp;</span>
+    </div>
+    <h1 class="post-title">Android窗口管理框架源码解析整理</h1>
+  </header>
+
+  <section class="post">
+    <blockquote>
+<p>原文地址 <a href="https://github.com/guoxiaoxing/android-open-source-project-analysis" target="_blank" rel="noopener">Android open source project analysis</a> 感谢原作者<a href="https://github.com/guoxiaoxing" target="_blank" rel="noopener">guoxiaoxing</a>及相关技术大佬的无私付出.</p>
+<p>此篇文章在各位大佬的源码分析文章的基础上对自己的理解进行整理，各位可结合原文分析使用，如有不实之处欢迎指正.</p>
+</blockquote>
+<h3 id="Android窗口管理框架"><a href="#Android窗口管理框架" class="headerlink" title="Android窗口管理框架"></a>Android窗口管理框架</h3><ul>
+<li><p>[x] <a href="https://github.com/guoxiaoxing/android-open-source-project-analysis/blob/master/doc/Android%E7%B3%BB%E7%BB%9F%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6%E7%AF%87/Android%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6/02Android%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6%EF%BC%9AAndroid%E5%BA%94%E7%94%A8%E8%A7%86%E5%9B%BE%E8%BD%BD%E4%BD%93View.md" target="_blank" rel="noopener">Android显示框架：Android应用视图的载体View</a></p>
+</li>
+<li><p>measure流程  </p>
+<ol>
+<li>ViewGroup在onMeasure()中会调用所有子View的measure让它们进行自我测量并在onMeasure中会计算出自己的尺寸然后保存  </li>
+<li>ViewGroup根据子View计算出的期望尺寸来计算出它们的实际尺寸和位置然后保存。同时，根据子View的尺寸和位置来计算出自己的尺寸然后保存.  </li>
+<li>viewGroup onMeasure() -&gt; view measure() -&gt; view onMeasure() </li>
+<li>日常开发中我们接触最多的不是MeasureSpec而是LayoutParams，在View测量的时候，LayoutParams会和父View的MeasureSpec相结合被换算成View的MeasureSpec，进而决定View的大小。</li>
+<li>View的MeasureSpec计算源码如下所示，该方法用来获取子View的MeasureSpec，由参数我们就可以知道子View的MeasureSpec由父容器的spec，父容器中已占用的的空间大小padding，以及子View自身大小childDimension共同来决定的。</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">public abstract class ViewGroup extends View implements ViewParent, ViewManager &#123;</span><br><span class="line">    </span><br><span class="line">     public static int getChildMeasureSpec(int spec, int padding, int childDimension) &#123;</span><br><span class="line">            int specMode = MeasureSpec.getMode(spec);</span><br><span class="line">            int specSize = MeasureSpec.getSize(spec);</span><br><span class="line">    </span><br><span class="line">            int size = Math.max(0, specSize - padding);</span><br><span class="line">    </span><br><span class="line">            int resultSize = 0;</span><br><span class="line">            int resultMode = 0;</span><br><span class="line">    </span><br><span class="line">            switch (specMode) &#123;</span><br><span class="line">            // Parent has imposed an exact size on us</span><br><span class="line">            case MeasureSpec.EXACTLY:</span><br><span class="line">                if (childDimension &gt;= 0) &#123;</span><br><span class="line">                    resultSize = childDimension;</span><br><span class="line">                    resultMode = MeasureSpec.EXACTLY;</span><br><span class="line">                &#125; else if (childDimension == LayoutParams.MATCH_PARENT) &#123;</span><br><span class="line">                    // Child wants to be our size. So be it.</span><br><span class="line">                    resultSize = size;</span><br><span class="line">                    resultMode = MeasureSpec.EXACTLY;</span><br><span class="line">                &#125; else if (childDimension == LayoutParams.WRAP_CONTENT) &#123;</span><br><span class="line">                    // Child wants to determine its own size. It can&apos;t be</span><br><span class="line">                    // bigger than us.</span><br><span class="line">                    resultSize = size;</span><br><span class="line">                    resultMode = MeasureSpec.AT_MOST;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">    </span><br><span class="line">            // Parent has imposed a maximum size on us</span><br><span class="line">            case MeasureSpec.AT_MOST:</span><br><span class="line">                if (childDimension &gt;= 0) &#123;</span><br><span class="line">                    // Child wants a specific size... so be it</span><br><span class="line">                    resultSize = childDimension;</span><br><span class="line">                    resultMode = MeasureSpec.EXACTLY;</span><br><span class="line">                &#125; else if (childDimension == LayoutParams.MATCH_PARENT) &#123;</span><br><span class="line">                    // Child wants to be our size, but our size is not fixed.</span><br><span class="line">                    // Constrain child to not be bigger than us.</span><br><span class="line">                    resultSize = size;</span><br><span class="line">                    resultMode = MeasureSpec.AT_MOST;</span><br><span class="line">                &#125; else if (childDimension == LayoutParams.WRAP_CONTENT) &#123;</span><br><span class="line">                    // Child wants to determine its own size. It can&apos;t be</span><br><span class="line">                    // bigger than us.</span><br><span class="line">                    resultSize = size;</span><br><span class="line">                    resultMode = MeasureSpec.AT_MOST;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">    </span><br><span class="line">            // Parent asked to see how big we want to be</span><br><span class="line">            case MeasureSpec.UNSPECIFIED:</span><br><span class="line">                if (childDimension &gt;= 0) &#123;</span><br><span class="line">                    // Child wants a specific size... let him have it</span><br><span class="line">                    resultSize = childDimension;</span><br><span class="line">                    resultMode = MeasureSpec.EXACTLY;</span><br><span class="line">                &#125; else if (childDimension == LayoutParams.MATCH_PARENT) &#123;</span><br><span class="line">                    // Child wants to be our size... find out how big it should</span><br><span class="line">                    // be</span><br><span class="line">                    resultSize = 0;</span><br><span class="line">                    resultMode = MeasureSpec.UNSPECIFIED;</span><br><span class="line">                &#125; else if (childDimension == LayoutParams.WRAP_CONTENT) &#123;</span><br><span class="line">                    // Child wants to determine its own size.... find out how</span><br><span class="line">                    // big it should be</span><br><span class="line">                    resultSize = 0;</span><br><span class="line">                    resultMode = MeasureSpec.UNSPECIFIED;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            return MeasureSpec.makeMeasureSpec(resultSize, resultMode);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>View事件分发</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ViewGroup dispatchTouchEvent </span><br><span class="line">--&gt; ViewGroup onInterceptTouchEvent </span><br><span class="line">--&gt; onInterceptTouchEvent is True</span><br><span class="line">--&gt; |True| block</span><br><span class="line">--&gt; |False| View dispatchTouchEvent </span><br><span class="line">--&gt; View onTouchEvent </span><br><span class="line">--&gt; View performClick</span><br></pre></td></tr></table></figure>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> <a href="https://github.com/guoxiaoxing/android-open-source-project-analysis/blob/master/doc/Android%E7%B3%BB%E7%BB%9F%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6%E7%AF%87/Android%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6/03Android%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6%EF%BC%9AAndroid%E5%BA%94%E7%94%A8%E8%A7%86%E5%9B%BE%E7%AE%A1%E7%90%86%E8%80%85Window.md" target="_blank" rel="noopener">Android窗口管理框架：Android应用视图的管理者Window</a></li>
+</ul>
+<p>window 抽象类，定义了窗口类型，窗口参数以及窗口模式。在定义的窗口回调中进行事件分发，Activity实现了Window.Callback接口，将Activity关联给Window，Window就可以将一些事件交由Activity处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">public interface Callback &#123;</span><br><span class="line"></span><br><span class="line">        //键盘事件分发</span><br><span class="line">        public boolean dispatchKeyEvent(KeyEvent event);</span><br><span class="line">        </span><br><span class="line">        //触摸事件分发</span><br><span class="line">        public boolean dispatchTouchEvent(MotionEvent event);</span><br><span class="line">        </span><br><span class="line">        //轨迹球事件分发</span><br><span class="line">        public boolean dispatchTrackballEvent(MotionEvent event);</span><br><span class="line"></span><br><span class="line">        //可见性事件分发</span><br><span class="line">        public boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent event);</span><br><span class="line"></span><br><span class="line">        //创建Panel View</span><br><span class="line">        public View onCreatePanelView(int featureId);</span><br><span class="line"></span><br><span class="line">        //创建menu</span><br><span class="line">        public boolean onCreatePanelMenu(int featureId, Menu menu);</span><br><span class="line"></span><br><span class="line">        //画板准备好时回调</span><br><span class="line">        public boolean onPreparePanel(int featureId, View view, Menu menu);</span><br><span class="line"></span><br><span class="line">        //menu打开时回调</span><br><span class="line">        public boolean onMenuOpened(int featureId, Menu menu);</span><br><span class="line"></span><br><span class="line">        //menu item被选择时回调</span><br><span class="line">        public boolean onMenuItemSelected(int featureId, MenuItem item);</span><br><span class="line"></span><br><span class="line">        //Window Attributes发生变化时回调</span><br><span class="line">        public void onWindowAttributesChanged(WindowManager.LayoutParams attrs);</span><br><span class="line"></span><br><span class="line">        //Content View发生变化时回调</span><br><span class="line">        public void onContentChanged();</span><br><span class="line"></span><br><span class="line">        //窗口焦点发生变化时回调</span><br><span class="line">        public void onWindowFocusChanged(boolean hasFocus);</span><br><span class="line"></span><br><span class="line">        //Window被添加到WIndowManager时回调</span><br><span class="line">        public void onAttachedToWindow();</span><br><span class="line">        </span><br><span class="line">        //Window被从WIndowManager中移除时回调</span><br><span class="line">        public void onDetachedFromWindow();</span><br><span class="line">        </span><br><span class="line">         */</span><br><span class="line">        //画板关闭时回调</span><br><span class="line">        public void onPanelClosed(int featureId, Menu menu);</span><br><span class="line">        </span><br><span class="line">        //用户开始执行搜索操作时回调</span><br><span class="line">        public boolean onSearchRequested();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>窗口的唯一实现类为PhoneWindow,PhoneWindow里包含了以下内容：<ol>
+<li>private DecorView mDecor：DecorView是Activity中的顶级View，它本质上是一个FrameLayout，一般说来它内部包含标题栏和内容栏（com.android.internal.R.id.content）</li>
+<li>ViewGroup mContentParent：窗口内容视图，它是mDecor本身或者是它的子View。</li>
+<li>private ImageView mLeftIconView：左上角图标</li>
+<li>private ImageView mRightIconView：右上角图标</li>
+<li>private ProgressBar mCircularProgressBar：圆形loading条</li>
+<li>private ProgressBar mHorizontalProgressBar：水平loading条</li>
+<li>其他的一些和转场动画相关的Transition与listener<br>在PhoneWindow的setContentView方法中判断是否存在DecorView，没有的化就创建DecorView并将创建好的DecorView赋值给mContentParent具体实现如下:</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class PhoneWindow extends Window implements MenuBuilder.Callback &#123;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public void setContentView(int layoutResID) &#123;</span><br><span class="line">        // Note: FEATURE_CONTENT_TRANSITIONS may be set in the process of installing the window</span><br><span class="line">        // decor, when theme attributes and the like are crystalized. Do not check the feature</span><br><span class="line">        // before this happens.</span><br><span class="line">        if (mContentParent == null) &#123;</span><br><span class="line">            //1. 如果没有DecorView则创建它，并将创建好的DecorView赋值给mContentParent</span><br><span class="line">            installDecor();</span><br><span class="line">        &#125; else if (!hasFeature(FEATURE_CONTENT_TRANSITIONS)) &#123;</span><br><span class="line">            mContentParent.removeAllViews();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (hasFeature(FEATURE_CONTENT_TRANSITIONS)) &#123;</span><br><span class="line">            final Scene newScene = Scene.getSceneForLayout(mContentParent, layoutResID,</span><br><span class="line">                    getContext());</span><br><span class="line">            transitionTo(newScene);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            //2. 将Activity传入的布局文件生成View并添加到mContentParent中</span><br><span class="line">            mLayoutInflater.inflate(layoutResID, mContentParent);</span><br><span class="line">        &#125;</span><br><span class="line">        mContentParent.requestApplyInsets();</span><br><span class="line">        final Callback cb = getCallback();</span><br><span class="line">        if (cb != null &amp;&amp; !isDestroyed()) &#123;</span><br><span class="line">            //3. 回调Window.Callback里的onContentChanged()方法，这个Callback也被Activity</span><br><span class="line">            //所持有，因此它实际回调的是Activity里的onContentChanged()方法，通知Activity</span><br><span class="line">            //视图已经发生改变。</span><br><span class="line">            cb.onContentChanged();</span><br><span class="line">        &#125;</span><br><span class="line">        mContentParentExplicitlySet = true;</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>[x] <a href="https://github.com/guoxiaoxing/android-open-source-project-analysis/blob/master/doc/Android%E7%B3%BB%E7%BB%9F%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6%E7%AF%87/Android%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6/04Android%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6%EF%BC%9AAndroid%E5%BA%94%E7%94%A8%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1WindowServiceManager.md" target="_blank" rel="noopener">Android窗口管理框架：Android应用窗口的管理服务WindowManagerService</a></p>
+<blockquote>
+<p>wms内容较为复杂建议参考原文分析理解</p>
+</blockquote>
+</li>
+<li><p>[x] <a href="https://github.com/guoxiaoxing/android-open-source-project-analysis/blob/master/doc/Android%E7%B3%BB%E7%BB%9F%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6%E7%AF%87/Android%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6/05Android%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6%EF%BC%9AAndroid%E5%B8%83%E5%B1%80%E8%A7%A3%E6%9E%90%E8%80%85LayoutInflater.md" target="_blank" rel="noopener">Android窗口管理框架：Android布局解析者LayoutInflater</a></p>
+</li>
+<li><p>获取XmlResourceParser</p>
+<ol>
+<li>Activity 调用LayoutInflater的inflate</li>
+<li>inflate中调用Resources的getLayout(resource)去获取对应的XmlResourceParser。</li>
+<li>getLayout(resource)又去调用了Resources的loadXmlResourceParser()方法来完成XmlResourceParser的加载</li>
+</ol>
+</li>
+<li>解析View树<ol>
+<li>获取树的深度，执行深度优先遍历.</li>
+<li>逐个进行元素解析。</li>
+<li>解析添加ad:focusable=”true”的元素，并获取View焦点。</li>
+<li>解析View的tag。</li>
+<li>解析include标签，注意include标签不能作为根元素，而merge必须作为根元素。</li>
+<li>根据元素名进行解析，生成View。</li>
+<li>递归调用解析该View里的所有子View，也是深度优先遍历，rInflateChildren内部调用的也是rInflate()方法，只是传入了新的parent View。</li>
+<li>将解析出来的View添加到它的父View中。</li>
+<li>回调根容器的onFinishInflate()方法，这个方法我们应该很熟悉。</li>
+</ol>
+</li>
+<li>解析view标签<ol>
+<li>解析View标签createViewFromTag。</li>
+<li>如果标签与主题相关，则需要将context与themeResId包裹成ContextThemeWrapper。</li>
+<li>BlinkLayout是一种会闪烁的布局，被包裹的内容会一直闪烁，像QQ消息那样。</li>
+<li>用户可以设置LayoutInflater的Factory来进行View的解析，但是默认情况下这些Factory都是为空的。</li>
+<li>默认情况下没有Factory，而是通过onCreateView()方法对内置View进行解析，createView()方法进行自定义View的解析。这里有个小技巧，因为我们在使用自定义View的时候是需要在xml指定全路径的，例如：com.guoxiaoxing.CustomView，那么这里就有个.了，可以利用这一点判定是内置View还是自定义View。</li>
+</ol>
+</li>
+<li style="list-style: none"><input type="checkbox" checked> <a href="https://github.com/guoxiaoxing/android-open-source-project-analysis/blob/master/doc/Android%E7%B3%BB%E7%BB%9F%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6%E7%AF%87/Android%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6/06Android%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6%EF%BC%9AAndroid%E5%88%97%E8%A1%A8%E6%8E%A7%E4%BB%B6RecyclerView.md" target="_blank" rel="noopener">Android窗口管理框架：Android列表控件RecyclerView</a></li>
+</ul>
+<p><img src="https://github.com/guoxiaoxing/android-open-source-project-analysis/raw/master/art/app/ui/recyclerview_structure.png" alt=""></p>
+<ul>
+<li>Adapter将数据DataSet翻译成RecyclerView可以理解的ViewHolder，Recycler负责对这些ViewHolder进行管理,LayoutManager从Recycler获取这些ViewHolder，然后在RecyclerView里对它们进行布局，在布局的过程中还可以通过ItemDecoration、ItemAnimator为这些ViewHolder添加分隔条、转场动画等东西，让整个RecyclerView更加具有交互性。</li>
+</ul>
+<h3 id="Android组件管理框架"><a href="#Android组件管理框架" class="headerlink" title="Android组件管理框架"></a>Android组件管理框架</h3><ul>
+<li><p>[x] <a href="https://github.com/guoxiaoxing/android-open-source-project-analysis/blob/master/doc/Android%E7%B3%BB%E7%BB%9F%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6%E7%AF%87/Android%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6/02Android%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6%EF%BC%9AAndroid%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1ActivityServiceManager.md" target="_blank" rel="noopener">Android组件管理框架：Android组件管理服务ActivityManagerService</a></p>
+<blockquote>
+<p>init进程 –&gt; Zygote进程 –&gt; SystemServer进程 –&gt;各种应用进程</p>
+</blockquote>
+</li>
+<li><p>[x] <a href="https://github.com/guoxiaoxing/android-open-source-project-analysis/blob/master/doc/Android%E7%B3%BB%E7%BB%9F%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6%E7%AF%87/Android%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6/03Android%E7%BB%84%E4%BB%B6%E7%AE%A1%E7%90%86%E6%A1%86%E6%9E%B6%EF%BC%9AAndroid%E8%A7%86%E5%9B%BE%E5%AE%B9%E5%99%A8Activity.md" target="_blank" rel="noopener">Android组件管理框架：Android视图容器Activity</a></p>
+</li>
+<li>点击桌面应用图标，Launcher进程将启动Activity（MainActivity）的请求以Binder的方式发送给了AMS。</li>
+<li>AMS接收到启动请求后，交付ActivityStarter处理Intent和Flag等信息，然后再交给ActivityStackSupervisior/ActivityStack处理Activity进栈相关流程。同时以Socket方式请求Zygote进程fork新进程。</li>
+<li>Zygote接收到新进程创建请求后fork出新进程。</li>
+<li>在新进程里创建ActivityThread对象，新创建的进程就是应用的主线程，在主线程里开启Looper消息循环，开始处理创建Activity。</li>
+<li>ActivityThread利用ClassLoader去加载Activity、创建Activity实例，并回调Activity的onCreate()方法。这样便完成了Activity的启动。</li>
+<li>什么情况下需要设置FLAG_ACTIVITY_NEW_TASK标志位<ol>
+<li>调用者不是Activity Context</li>
+<li>调用者Activity调用single Instance</li>
+<li>目标Activity设置的有single Instance或者single task</li>
+<li>调用者处于finish状态</li>
+</ol>
+</li>
+<li>启动模式一共有四种<ol>
+<li>standard：多实例模式，每次启动都会有创建一个实例，默认会进入启动它的那个Activity所属的任务栈的栈顶，读者以前可能使用过Application Context去启动Activity，这是情况下会报错，就是因为 Application Context没有所谓的任务栈，解决的方式就是给它添加一个FLAG_ACTIVITY_NEW_TASK的标志位，创建一个新的任务栈。</li>
+<li>singleTop：栈顶复用模式，如果新启动的Activity已经位于任务栈顶，则不会创建新的实例，而是回调原来Activity实例的onNewIntent()方法，如果新启动的Activity没有位于任务栈顶，则会创建 新的Activity实例。</li>
+<li>singleTask：栈内复用模式，如果新启动的Activity已经位于任务栈内，则不会创建新的实例，而是回调原来Activity实例的onNewIntent()方法并且清除它之上的Activity（这里需要注意一下：任务栈里 的Activity是永远不会重排序的，所以它会清楚上方所有的Activity来让自己回到栈顶），如果新启动的Activity 没有位于任务栈，则新建一个Activity实例。</li>
+<li>singleInstance：单实例模式，和singleTask相似，但是singleTask可以在多个栈里拥有多个实例，而singleInstance在多个栈里只能有唯一实例，这个一般用在特殊场景里，例如电话界面。</li>
+</ol>
+</li>
+</ul>
+
+  </section>
+
+</article>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@Longbo Ma</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="http://github.com/onevcat/vno" target="_blank">Vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+</body>
+</html>
